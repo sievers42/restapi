@@ -1,0 +1,138 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# Paths supported by the server application
+paths:
+
+  /todo:
+    get:
+      operationId: todo.read_all
+      tags:
+        - todo
+      summary: Read the entire list of tasks
+      description: Read the list of tasks
+      responses:
+        200:
+          description: Successfully read task list operation
+          schema:
+            type: array
+            items:
+              properties:
+                title: 
+                  type: string
+                task:
+                  type: string
+                timestamp:
+                  type: string
+
+    post:
+      operationId: todo.create
+      tags:
+        - todo
+      summary: Create a task and add it to the task list
+      description: Create a new task in the task list
+      parameters:
+        - name: todo
+          in: body
+          description: task to create
+          required: True
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                description: title of task to create
+              task:
+                type: string
+                description: description of task to create
+      responses:
+        201:
+          description: Successfully created task in list
+          
+    delete:
+      operationId: todo.delete_all
+      tags:
+        - todo
+      summary: Delete the entire list of tasks
+      description: Delete the list of tasks
+      responses:
+        200:
+          description: Successfully eleted task list operation
+
+
+  /todo/{title}:
+    get:
+      operationId: todo.read_one
+      tags:
+        - todo
+      summary: Read one task from the task list
+      description: Read one task from the task list
+      parameters:
+        - name: title
+          in: path
+          description: Title of task to get from list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read task from list
+          schema:
+            properties:
+              title:
+                type: string
+              task:
+                type: string
+              timestamp:
+                type: string
+
+    put:
+      operationId: todo.update
+      tags:
+        - todo
+      summary: Update a task in the list
+      description: Update a task in the list
+      parameters:
+        - name: title
+          in: path
+          description: title of task to update in the list
+          type: string
+          required: True
+        - name: todo
+          in: body
+          description: task to update
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                description: string to change title to
+              task:
+                type: string
+                description: string to change task to
+      responses:
+        200:
+          description: Successfully updated task in list
+
+    delete:
+      operationId: todo.delete
+      tags:
+        - todo
+      summary: Delete a task from the list
+      description: Delete a task
+      parameters:
+        - name: title
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+         description: Successfully deleted a task from list
